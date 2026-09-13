@@ -27,6 +27,7 @@ interface CardDetailDialogProps {
   onDelete: (id: string) => void;
   onDuplicate: (id: string) => void;
   onArchiveToggle: (id: string, archived: boolean) => void;
+  onCreateTag: (name: string, cardId: string) => void;
 }
 
 async function fileToDataUrl(file: File): Promise<string> {
