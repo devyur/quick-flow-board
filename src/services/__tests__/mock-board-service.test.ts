@@ -26,7 +26,7 @@ describe("mock board service", () => {
   it("creates, updates and deletes cards", async () => {
     const service = svc();
     let board = await service.getBoard();
-    const col = board.columns[0].id;
+    const col = board.columns[0]!.id;
 
     board = await service.createCard({ title: "  New task  ", columnId: col });
     const card = board.cards.find((c) => c.title === "New task")!;
@@ -44,7 +44,7 @@ describe("mock board service", () => {
   it("moves a card to another column at the requested index", async () => {
     const service = svc();
     let board = await service.getBoard();
-    const [from, to] = board.columns;
+    const [from, to] = board.columns as [typeof board.columns[0], typeof board.columns[0]];
     board = await service.createCard({ title: "A", columnId: to.id });
     board = await service.createCard({ title: "B", columnId: to.id });
     const moved = board.cards.find((c) => c.columnId === from.id)!;
@@ -62,7 +62,7 @@ describe("mock board service", () => {
   it("reorders cards within a column", async () => {
     const service = svc();
     let board = await service.getBoard();
-    const col = board.columns[0].id;
+    const col = board.columns[0]!.id;
     board = await service.createCard({ title: "One", columnId: col });
     board = await service.createCard({ title: "Two", columnId: col });
     const two = board.cards.find((c) => c.title === "Two")!;
@@ -82,13 +82,13 @@ describe("mock board service", () => {
     board = await service.duplicateCard(source.id);
     const copy = board.cards.find((c) => c.title === `${source.title} (copy)`)!;
     expect(copy.id).not.toBe(source.id);
-    expect(copy.checklist[0].id).not.toBe(source.checklist[0].id);
+    expect(copy.checklist[0]!.id).not.toBe(source.checklist[0]!.id);
   });
 
   it("archives and restores cards", async () => {
     const service = svc();
     let board = await service.getBoard();
-    const card = board.cards[0];
+    const card = board.cards[0]!;
     board = await service.setCardArchived(card.id, true);
     expect(board.cards.find((c) => c.id === card.id)!.archived).toBe(true);
     board = await service.setCardArchived(card.id, false);
@@ -98,7 +98,7 @@ describe("mock board service", () => {
   it("deletes a column and moves its cards to a target column", async () => {
     const service = svc();
     let board = await service.getBoard();
-    const [first, second] = board.columns;
+    const [first, second] = board.columns as [typeof board.columns[0], typeof board.columns[0]];
     const movedCount = board.cards.filter((c) => c.columnId === first.id).length;
     const before = board.cards.filter((c) => c.columnId === second.id).length;
 
@@ -114,7 +114,7 @@ describe("mock board service", () => {
   it("deletes a column together with its cards", async () => {
     const service = svc();
     let board = await service.getBoard();
-    const target = board.columns[2];
+    const target = board.columns[2]!;
     board = await service.deleteColumn(target.id, { action: "delete-cards" });
     expect(board.cards.some((c) => c.columnId === target.id)).toBe(false);
   });
@@ -132,7 +132,7 @@ describe("mock board service", () => {
     const service = svc();
     const board = await service.getBoard();
     const ids = board.columns.map((c) => c.id);
-    const reordered = [ids[3], ids[0], ids[1], ids[2]];
+    const reordered = [ids[3]!, ids[0]!, ids[1]!, ids[2]!];
     const next = await service.reorderColumns(reordered);
     expect(next.columns.map((c) => c.id)).toEqual(reordered);
   });
@@ -146,7 +146,7 @@ describe("mock board service", () => {
 
     board = await service.createTag("research");
     const tag = board.tags.find((t) => t.name === "research")!;
-    const card = board.cards[0];
+    const card = board.cards[0]!;
     board = await service.updateCard(card.id, { tagIds: [tag.id] });
     board = await service.deleteTag(tag.id);
     expect(board.cards.find((c) => c.id === card.id)!.tagIds).not.toContain(tag.id);
@@ -164,7 +164,7 @@ describe("mock board service", () => {
   it("resets back to the seeded board", async () => {
     const service = svc();
     let board = await service.getBoard();
-    board = await service.deleteCard(board.cards[0].id);
+    board = await service.deleteCard(board.cards[0]!.id);
     const reset = await service.reset();
     expect(reset.cards.length).toBeGreaterThan(board.cards.length);
   });
