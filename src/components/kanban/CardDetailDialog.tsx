@@ -47,6 +47,7 @@ export function CardDetailDialog({
   onDelete,
   onDuplicate,
   onArchiveToggle,
+  onCreateTag,
 }: CardDetailDialogProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
