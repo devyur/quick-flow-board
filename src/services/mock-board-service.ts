@@ -56,18 +56,18 @@ export function createDefaultBoard(): Board {
   const cards: Card[] = [
     base({
       title: "Sketch the new landing hero",
-      columnId: columns[0].id,
+      columnId: columns[0]!.id,
       position: 0,
       description: "Rough shapes first, then refine.",
-      tagIds: [tags[3].id],
+      tagIds: [tags[3]!.id],
       color: "purple",
     }),
     base({
       title: "Write weekly plan",
-      columnId: columns[1].id,
+      columnId: columns[1]!.id,
       position: 0,
       priority: "medium",
-      tagIds: [tags[0].id],
+      tagIds: [tags[0]!.id],
       checklist: [
         { id: makeId("chk"), text: "Review last week", done: true },
         { id: makeId("chk"), text: "Pick three priorities", done: false },
@@ -75,15 +75,15 @@ export function createDefaultBoard(): Board {
     }),
     base({
       title: "Fix drag-and-drop jitter",
-      columnId: columns[2].id,
+      columnId: columns[2]!.id,
       position: 0,
       priority: "high",
-      tagIds: [tags[0].id, tags[2].id],
+      tagIds: [tags[0]!.id, tags[2]!.id],
       color: "orange",
     }),
     base({
       title: "Set up the board",
-      columnId: columns[3].id,
+      columnId: columns[3]!.id,
       position: 0,
       completed: true,
     }),

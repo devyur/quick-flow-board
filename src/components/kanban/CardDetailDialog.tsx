@@ -47,6 +47,7 @@ export function CardDetailDialog({
   onDelete,
   onDuplicate,
   onArchiveToggle,
+  onCreateTag,
 }: CardDetailDialogProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -368,12 +369,7 @@ export function CardDetailDialog({
                   onKeyDown={(e) => {
                     if (e.key !== "Enter" || !newTag.trim()) return;
                     e.preventDefault();
-                    onPatch(id, { tagIds: card.tagIds });
-                    window.dispatchEvent(
-                      new CustomEvent("kanban:create-tag", {
-                        detail: { name: newTag.trim(), cardId: id },
-                      }),
-                    );
+                    onCreateTag(newTag.trim(), id);
                     setNewTag("");
                   }}
                   placeholder="New tag + Enter"
