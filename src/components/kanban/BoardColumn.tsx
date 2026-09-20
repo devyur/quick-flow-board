@@ -158,7 +158,7 @@ export function BoardColumn({
             {canDelete && (
               <>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive" onSelect={onDelete}>
+                <DropdownMenuItem className="text-destructive focus:text-destructive" onSelect={onDelete}>
                   <Trash2 className="size-4" /> Delete column
                 </DropdownMenuItem>
               </>

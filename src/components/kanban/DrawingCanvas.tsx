@@ -70,7 +70,7 @@ export function DrawingCanvas({ initial, onSave, onClose }: DrawingCanvasProps) 
     if (!drawing.current || !context) return;
     const { x, y } = point(e);
     context.lineWidth = tool === "eraser" ? size * 3 : size;
-    context.strokeStyle = tool === "eraser" ? "#ffffff" : color;
+    context.strokeStyle = tool === "eraser" ? "#ffffff" : (color ?? "#000000");
     context.lineTo(x, y);
     context.stroke();
   };
@@ -103,7 +103,7 @@ export function DrawingCanvas({ initial, onSave, onClose }: DrawingCanvasProps) 
     if (history.current.length < 2) return;
     const current = history.current.pop()!;
     future.current.push(current);
-    restore(history.current[history.current.length - 1]);
+    restore(history.current[history.current.length - 1]!);
   };
 
   const redo = () => {

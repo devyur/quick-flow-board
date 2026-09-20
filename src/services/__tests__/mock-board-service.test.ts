@@ -16,7 +16,7 @@ describe("mock board service", () => {
     const store = createMemoryStore();
     const a = createMockBoardService({ store });
     const first = await a.getBoard();
-    await a.createCard({ title: "Persisted", columnId: first.columns[0].id });
+    await a.createCard({ title: "Persisted", columnId: first.columns[0]!.id });
 
     const b = createMockBoardService({ store });
     const board = await b.getBoard();
